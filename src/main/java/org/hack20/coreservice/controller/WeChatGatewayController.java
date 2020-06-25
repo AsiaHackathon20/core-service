@@ -2,7 +2,6 @@ package org.hack20.coreservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hack20.coreservice.gateway.model.wechat.Department;
-import org.hack20.coreservice.gateway.model.wechat.ExternalContact;
 import org.hack20.coreservice.gateway.model.wechat.User;
 import org.hack20.coreservice.service.WeChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +38,8 @@ public class WeChatGatewayController {
     }
 
     @PutMapping(value = "/external-contact")
-    public ExternalContact getExternalContacts(@RequestParam("accessToken") String accessToken, @RequestParam("userID") String externalUserID) {
-        log.info("Retrieving user information for external user {}", externalUserID);
-        return wechatService.getExternalContacts(accessToken, externalUserID);
+    public List<String> getExternalContacts(@RequestParam("accessToken") String accessToken, @RequestParam("userID") String userID) {
+        log.info("Retrieving external contacts for user id {}", userID);
+        return wechatService.getExternalContacts(accessToken, userID);
     }
 }

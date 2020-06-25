@@ -21,6 +21,6 @@ public interface WeChatGateway {
     @RequestMapping(method = RequestMethod.GET, value = "/cgi-bin/user/list")
     GetUsersInDepartmentResponse getUsersInDepartment(@RequestParam("access_token") String accessToken, @RequestParam("department_id") Long departmentID);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/cgi-bin/externalcontact/get")
-    GetExternalContactResponse getExternalContacts(@RequestParam("access_token") String accessToken, @RequestParam("external_userid") String externalUserID);
+    @RequestMapping(method = RequestMethod.GET, value = "/cgi-bin/externalcontact/list")
+    GetExternalContactResponse getExternalContacts(@RequestParam("access_token") String accessToken, @RequestParam("userid") String userID);
 }

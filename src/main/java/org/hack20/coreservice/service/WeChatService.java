@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hack20.coreservice.exception.CoreServiceException;
 import org.hack20.coreservice.gateway.WeChatGateway;
 import org.hack20.coreservice.gateway.model.wechat.Department;
-import org.hack20.coreservice.gateway.model.wechat.ExternalContact;
 import org.hack20.coreservice.gateway.model.wechat.GetAuthTokenResponse;
 import org.hack20.coreservice.gateway.model.wechat.GetDepartmentsResponse;
 import org.hack20.coreservice.gateway.model.wechat.GetExternalContactResponse;
@@ -59,11 +58,11 @@ public class WeChatService {
         }
     }
 
-    public ExternalContact getExternalContacts(String accessToken, String externalUserID) {
+    public List<String> getExternalContacts(String accessToken, String externalUserID) {
         GetExternalContactResponse response = wechatGateway.getExternalContacts(accessToken, externalUserID);
         log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
         if (response.getErrcode() == 0) {
-            return response.getExternal_contact();
+            return response.getExternal_userid();
         } else {
             throw new CoreServiceException();
         }
