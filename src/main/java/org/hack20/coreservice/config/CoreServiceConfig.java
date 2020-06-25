@@ -15,14 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @EnableCaching
 @EnableFeignClients(basePackages = "org.hack20.coreservice.gateway")
 public class CoreServiceConfig {
-
-
-
     @Bean
     public PolicyService policyService(){
         return new PolicyService();
     }
-
-
 
 }
