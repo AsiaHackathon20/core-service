@@ -4,9 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hack20.coreservice.gateway.PolicyGateway;
 import org.hack20.coreservice.gateway.model.policy.Policy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -24,7 +22,7 @@ public class PolicyService {
 
     private Map<String, Policy> policyMap = new HashMap<>();
 
-    @EventListener(classes = ApplicationReadyEvent.class)
+//    @EventListener(classes = ApplicationReadyEvent.class)
     void init() {
         log.info("Loading cache from policy server");
         List<Policy> policies = policyGateway.getAllPolicies();

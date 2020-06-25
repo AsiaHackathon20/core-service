@@ -2,10 +2,12 @@ package org.hack20.coreservice.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hack20.coreservice.exception.CoreServiceException;
-import org.hack20.coreservice.gateway.WechatGateway;
+import org.hack20.coreservice.gateway.WeChatGateway;
 import org.hack20.coreservice.gateway.model.wechat.Department;
+import org.hack20.coreservice.gateway.model.wechat.ExternalContact;
 import org.hack20.coreservice.gateway.model.wechat.GetAuthTokenResponse;
 import org.hack20.coreservice.gateway.model.wechat.GetDepartmentsResponse;
+import org.hack20.coreservice.gateway.model.wechat.GetExternalContactResponse;
 import org.hack20.coreservice.gateway.model.wechat.GetUsersInDepartmentResponse;
 import org.hack20.coreservice.gateway.model.wechat.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,10 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class WechatService {
+public class WeChatService {
 
     @Autowired
-    private WechatGateway wechatGateway;
+    private WeChatGateway wechatGateway;
 
     @Value("${credentials.stratos.corpID}")
     private String corpID;
@@ -52,6 +54,16 @@ public class WechatService {
         log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
         if (response.getErrcode() == 0) {
             return response.getUserlist();
+        } else {
+            throw new CoreServiceException();
+        }
+    }
+
+    public ExternalContact getExternalContacts(String accessToken, String externalUserID) {
+        GetExternalContactResponse response = wechatGateway.getExternalContacts(accessToken, externalUserID);
+        log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
+        if (response.getErrcode() == 0) {
+            return response.getExternal_contact();
         } else {
             throw new CoreServiceException();
         }
