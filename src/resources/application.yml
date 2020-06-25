@@ -7,3 +7,10 @@ logging:
 gateways:
   policyGateway:
     baseurl: http://localhost:8080
+  wechatGateway:
+    baseurl: https://qyapi.weixin.qq.com
+
+credentials:
+  stratos:
+    corpID:
+    corpSecret:
