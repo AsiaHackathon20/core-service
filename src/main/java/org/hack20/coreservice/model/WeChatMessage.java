@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class WeChatMessage {
+public class WeChatMessage implements ISMPMessage{
 
     @JsonProperty("ToUserName")
     private String toUserName;
