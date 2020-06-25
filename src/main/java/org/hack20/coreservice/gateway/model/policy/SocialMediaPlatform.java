@@ -1,5 +1,5 @@
 package org.hack20.coreservice.gateway.model.policy;
 
-public enum SocialMediaPlatforms {
+public enum SocialMediaPlatform {
     WE_CHAT, SYMPHONY
 }
