@@ -6,7 +6,7 @@ logging:
 
 gateways:
   policyGateway:
-    baseurl: http://localhost:8080
+    baseurl: http://localhost:9000
   wechatGateway:
     baseurl: https://qyapi.weixin.qq.com
 
