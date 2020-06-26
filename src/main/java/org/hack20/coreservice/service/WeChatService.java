@@ -1,7 +1,7 @@
 package org.hack20.coreservice.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hack20.coreservice.exception.CoreServiceException;
+import org.apache.commons.lang3.StringUtils;
 import org.hack20.coreservice.gateway.WeChatGateway;
 import org.hack20.coreservice.gateway.model.wechat.Department;
 import org.hack20.coreservice.gateway.model.wechat.GetAuthTokenResponse;
@@ -28,43 +28,38 @@ public class WeChatService {
     @Value("${credentials.stratos.corpSecret}")
     private String corpSecret;
 
+    private String inMemoryToken;
+
     public String getToken() {
         GetAuthTokenResponse response = weChatGateway.getToken(corpID, corpSecret);
         log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
-        if (response.getErrorCode() == 0) {
-            return response.getAccessToken();
-        } else {
-            throw new CoreServiceException();
-        }
+        inMemoryToken = response.getAccessToken();
+        return inMemoryToken;
     }
 
-    public List<Department> getAllDepartments(String accessToken) {
-        GetDepartmentsResponse response = weChatGateway.getAllDepartments(accessToken);
+    public List<Department> getAllDepartments() {
+        GetDepartmentsResponse response = weChatGateway.getAllDepartments(getInMemoryToken());
         log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
-        if (response.getErrorCode() == 0) {
-            return response.getDepartment();
-        } else {
-            throw new CoreServiceException();
-        }
+        return response.getDepartment();
     }
 
-    public List<User> getUsersInDepartment(String accessToken, Long departmentID) {
-        GetUsersInDepartmentResponse response = weChatGateway.getUsersInDepartment(accessToken, departmentID);
+    public List<User> getUsersInDepartment(Long departmentID) {
+        GetUsersInDepartmentResponse response = weChatGateway.getUsersInDepartment(getInMemoryToken(), departmentID);
         log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
-        if (response.getErrorCode() == 0) {
-            return response.getUserList();
-        } else {
-            throw new CoreServiceException();
-        }
+        return response.getUserList();
     }
 
-    public List<String> getExternalContacts(String accessToken, String externalUserID) {
-        GetExternalContactResponse response = weChatGateway.getExternalContacts(accessToken, externalUserID);
+    public List<String> getExternalContacts(String externalUserID) {
+        GetExternalContactResponse response = weChatGateway.getExternalContacts(getInMemoryToken(), externalUserID);
         log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
-        if (response.getErrorCode() == 0) {
-            return response.getExternalUserIds();
+        return response.getExternalUserIds();
+    }
+
+    private String getInMemoryToken() {
+        if (StringUtils.isNotBlank(inMemoryToken)) {
+            return inMemoryToken;
         } else {
-            throw new CoreServiceException();
+            return getToken();
         }
     }
 }

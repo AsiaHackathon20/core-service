@@ -26,20 +26,20 @@ public class WeChatGatewayController {
     }
 
     @PutMapping(value = "/department/all")
-    public List<Department> getAllDepartments(@RequestParam("accessToken") String accessToken) {
+    public List<Department> getAllDepartments() {
         log.info("Retrieving all departments");
-        return wechatService.getAllDepartments(accessToken);
+        return wechatService.getAllDepartments();
     }
 
     @PutMapping(value = "/department/users/all")
-    public List<User> getUsersInDepartment(@RequestParam("accessToken") String accessToken, @RequestParam("deptID") Long departmentID) {
+    public List<User> getUsersInDepartment(@RequestParam("deptID") Long departmentID) {
         log.info("Retrieving all users in department id {}", departmentID);
-        return wechatService.getUsersInDepartment(accessToken, departmentID);
+        return wechatService.getUsersInDepartment(departmentID);
     }
 
     @PutMapping(value = "/external-contact")
-    public List<String> getExternalContacts(@RequestParam("accessToken") String accessToken, @RequestParam("userID") String userID) {
+    public List<String> getExternalContacts(@RequestParam("userID") String userID) {
         log.info("Retrieving external contacts for user id {}", userID);
-        return wechatService.getExternalContacts(accessToken, userID);
+        return wechatService.getExternalContacts(userID);
     }
 }
