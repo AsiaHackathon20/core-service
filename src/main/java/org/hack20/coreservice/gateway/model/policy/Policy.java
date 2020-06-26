@@ -9,7 +9,7 @@ public class Policy {
 
     private String sid;
     private List<String> productScope;
-    private List<SocialMediaPlatforms> socialMediaPlatforms;
+    private List<SocialMediaPlatform> socialMediaPlatforms;
     private String jpmEnterpriseAccount;
     private List<Contacts> contacts;
 }
