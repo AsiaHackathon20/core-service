@@ -1,0 +1,9 @@
+server:
+  port: 7070
+
+logging:
+  config: 'classpath:logback.xml'
+
+gateways:
+  policyGateway:
+    baseurl: http://localhost:8080
