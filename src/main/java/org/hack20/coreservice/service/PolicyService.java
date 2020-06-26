@@ -41,9 +41,9 @@ public class PolicyService {
 
 
     public List<String> getEligibleContacts(final String sid, final PlatformIdentifierType platformIdentifierType){
-        final Policy policy = policyMap.get(sid);
+        final Policy policy = policyMap.getOrDefault(sid, new Policy());
         final List<String> eligibleContacts = new ArrayList<>();
-        final List<Contacts> contacts = policy.getContacts();
+        final List<Contacts> contacts = Optional.ofNullable(policy.getContacts()).orElse(Collections.EMPTY_LIST);
         contacts.forEach(contact -> {
             final Platform filteredPlatform = contact.getPlatforms().stream().filter(platform -> platformIdentifierType.equals(platform.getIdentifier())).findFirst().orElse(new Platform());
             eligibleContacts.addAll(Optional.ofNullable(filteredPlatform.getEnterpriseAccount()).orElse(Collections.EMPTY_LIST));
