@@ -35,8 +35,7 @@ public class WeChatWorkMessageService implements ISmpMessageService<WeChatMessag
         final String msgType = StringUtils.trimToEmpty(weChatMessage.getMsgType()).toUpperCase();
         switch (msgType){
             case "EVENT":
-                final String jpmUserSid = weChatMessage.getUserId();
-                processEventMessageType(weChatMessage.getChangeType(), jpmUserSid, weChatMessage.getExternalUserId(), Long.valueOf(weChatMessage.getCreateTime()));
+                processEventMessageType(weChatMessage);
                 break;
             case "TEXT":
                 processTextMessageType(weChatMessage);
@@ -54,27 +53,37 @@ public class WeChatWorkMessageService implements ISmpMessageService<WeChatMessag
         return PersonActivityDetails.buildPerson(StringUtils.EMPTY, RandomStringUtils.randomAlphabetic(6), externalUserId, zonedDateTime);
     }
 
-    private void processEventMessageType(final String changeType, final String jpmUserSid, final String externalUserId, final long createTimeInSeconds) {
+    private void processEventMessageType(final WeChatMessage weChatMessage) {
+        final String changeType = StringUtils.trimToEmpty(weChatMessage.getChangeType()).toUpperCase();
+        final String jpmUserSid = StringUtils.trimToEmpty(weChatMessage.getUserId()).toUpperCase();
+        final String externalUserId = StringUtils.trimToEmpty(weChatMessage.getExternalUserId()).toUpperCase();
+        final long createTimeInSeconds = Long.valueOf(weChatMessage.getCreateTime());
+
         final List<String> eligibleContacts = policyService.getEligibleContacts(jpmUserSid, PlatformIdentifierType.WE_CHAT);
         final PersonActivityDetails externalContact = getExternalContactActivityDetails(externalUserId, createTimeInSeconds);
-        log.info("Change Type received is = {}", changeType);
-        final SMPActivity smpActivity = weChatMessageDataStore.computeIfAbsent(jpmUserSid, s -> weChatMessageDataStore.put(jpmUserSid, new SMPActivity()));
-        final String externalContactSmpIdentifier = externalContact.getSmpIdentifier();
 
-        switch (changeType){
-            case "ADD_EXTERNAL_CONTACT":
-                smpActivity.getTotalNumberOfContacts().add(externalContact);
-                if (!eligibleContacts.contains(externalContactSmpIdentifier)) {
-                    smpActivity.getTotalUnacceptableContacts().add(externalContact);
-                    //We should try to send some event
-                }
-                return;
-            case "DEL_EXTERNAL_CONTACT":
-                smpActivity.getTotalNumberOfContacts().remove(externalContact);
-                smpActivity.getTotalUnacceptableContacts().remove(externalContact);
-                return;
-            default:
-                break;
+        if(StringUtils.isNotBlank(changeType)){
+            log.info("Change Type received is = {}", changeType);
+            final SMPActivity smpActivity = new SMPActivity();
+            weChatMessageDataStore.putIfAbsent(jpmUserSid, smpActivity);
+            final SMPActivity cachedSmpActivity = weChatMessageDataStore.get(jpmUserSid);
+            final String externalContactSmpIdentifier = externalContact.getSmpIdentifier();
+
+            switch (changeType){
+                case "ADD_EXTERNAL_CONTACT":
+                    smpActivity.getTotalNumberOfContacts().add(externalContact);
+                    if (!eligibleContacts.contains(externalContactSmpIdentifier)) {
+                        cachedSmpActivity.getTotalUnacceptableContacts().add(externalContact);
+                        //We should try to send some event
+                    }
+                    return;
+                case "DEL_EXTERNAL_CONTACT":
+                    cachedSmpActivity.getTotalNumberOfContacts().remove(externalContact);
+                    cachedSmpActivity.getTotalUnacceptableContacts().remove(externalContact);
+                    return;
+                default:
+                    break;
+            }
         }
     }
 
