@@ -1,5 +1,6 @@
 package org.hack20.coreservice.gateway.model.wechat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -7,8 +8,15 @@ import java.util.List;
 @Data
 public class User {
 
-    private String userid;
+    @JsonProperty("userid")
+    private String userID;
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("department")
     private List<Long> department;
-    private String open_userid;
+
+    @JsonProperty("open_userid")
+    private String openUserID;
 }

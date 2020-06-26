@@ -1,10 +1,17 @@
 package org.hack20.coreservice.gateway.model.wechat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class Response {
 
-    private long errcode;
-    private String errmsg;
+    public static final Long NO_ERROR_CODE = 0l;
+    public static final Long TOKEN_EXPIRED = 42001l;
+
+    @JsonProperty("errcode")
+    private long errorCode;
+
+    @JsonProperty("errmsg")
+    private String errorMessage;
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class WeChatService {
 
     @Autowired
-    private WeChatGateway wechatGateway;
+    private WeChatGateway weChatGateway;
 
     @Value("${credentials.stratos.corpID}")
     private String corpID;
@@ -29,19 +29,19 @@ public class WeChatService {
     private String corpSecret;
 
     public String getToken() {
-        GetAuthTokenResponse response = wechatGateway.getToken(corpID, corpSecret);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
-        if (response.getErrcode() == 0) {
-            return response.getAccess_token();
+        GetAuthTokenResponse response = weChatGateway.getToken(corpID, corpSecret);
+        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        if (response.getErrorCode() == 0) {
+            return response.getAccessToken();
         } else {
             throw new CoreServiceException();
         }
     }
 
     public List<Department> getAllDepartments(String accessToken) {
-        GetDepartmentsResponse response = wechatGateway.getAllDepartments(accessToken);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
-        if (response.getErrcode() == 0) {
+        GetDepartmentsResponse response = weChatGateway.getAllDepartments(accessToken);
+        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        if (response.getErrorCode() == 0) {
             return response.getDepartment();
         } else {
             throw new CoreServiceException();
@@ -49,20 +49,20 @@ public class WeChatService {
     }
 
     public List<User> getUsersInDepartment(String accessToken, Long departmentID) {
-        GetUsersInDepartmentResponse response = wechatGateway.getUsersInDepartment(accessToken, departmentID);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
-        if (response.getErrcode() == 0) {
-            return response.getUserlist();
+        GetUsersInDepartmentResponse response = weChatGateway.getUsersInDepartment(accessToken, departmentID);
+        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        if (response.getErrorCode() == 0) {
+            return response.getUserList();
         } else {
             throw new CoreServiceException();
         }
     }
 
     public List<String> getExternalContacts(String accessToken, String externalUserID) {
-        GetExternalContactResponse response = wechatGateway.getExternalContacts(accessToken, externalUserID);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrcode(), response.getErrmsg());
-        if (response.getErrcode() == 0) {
-            return response.getExternal_userid();
+        GetExternalContactResponse response = weChatGateway.getExternalContacts(accessToken, externalUserID);
+        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        if (response.getErrorCode() == 0) {
+            return response.getExternalUserIds();
         } else {
             throw new CoreServiceException();
         }
