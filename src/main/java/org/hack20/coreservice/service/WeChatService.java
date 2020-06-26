@@ -32,26 +32,26 @@ public class WeChatService {
 
     public String getToken() {
         GetAuthTokenResponse response = weChatGateway.getToken(corpID, corpSecret);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        log.info("Get token returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
         inMemoryToken = response.getAccessToken();
         return inMemoryToken;
     }
 
     public List<Department> getAllDepartments() {
         GetDepartmentsResponse response = weChatGateway.getAllDepartments(getInMemoryToken());
-        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        log.info("Get all departments returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
         return response.getDepartment();
     }
 
     public List<User> getUsersInDepartment(Long departmentID) {
         GetUsersInDepartmentResponse response = weChatGateway.getUsersInDepartment(getInMemoryToken(), departmentID);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        log.info("Get Users in department returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
         return response.getUserList();
     }
 
     public List<String> getExternalContacts(String externalUserID) {
         GetExternalContactResponse response = weChatGateway.getExternalContacts(getInMemoryToken(), externalUserID);
-        log.info("Returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        log.info("Get external contacts returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
         return response.getExternalUserIds();
     }
 
