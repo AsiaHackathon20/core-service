@@ -22,7 +22,7 @@ public class WeChatMessage implements ISMPMessage{
     private String agentId;
     @JsonProperty("ChangeType")
     private String changeType;
-    @JsonProperty("UserId")
+    @JsonProperty("UserID")
     private String userId;
     @JsonProperty("WelcomeCode")
     private String welcomeCode;
