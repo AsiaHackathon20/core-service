@@ -19,7 +19,7 @@ public class ResponseInterceptor {
 
     @Around("execution(* org.hack20.coreservice.gateway.WeChatGateway.*(..))")
     Object intercept(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info("Invoking interceptor");
+        log.debug("Invoking interceptor");
         Response response = (Response) joinPoint.proceed();
         if (Response.TOKEN_EXPIRED == response.getErrorCode()) {
             weChatService.getToken();
