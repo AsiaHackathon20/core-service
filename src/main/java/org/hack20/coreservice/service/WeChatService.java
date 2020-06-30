@@ -11,12 +11,15 @@ import org.hack20.coreservice.gateway.model.wechat.GetUsersInDepartmentResponse;
 import org.hack20.coreservice.gateway.model.wechat.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@ManagedResource
 public class WeChatService {
 
     @Autowired
@@ -30,13 +33,6 @@ public class WeChatService {
 
     private String inMemoryToken;
 
-    public String getToken() {
-        GetAuthTokenResponse response = weChatGateway.getToken(corpID, corpSecret);
-        log.info("Get token returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
-        inMemoryToken = response.getAccessToken();
-        return inMemoryToken;
-    }
-
     public List<Department> getAllDepartments() {
         GetDepartmentsResponse response = weChatGateway.getAllDepartments(getInMemoryToken());
         log.info("Get all departments returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
@@ -44,22 +40,40 @@ public class WeChatService {
     }
 
     public List<User> getUsersInDepartment(Long departmentID) {
-        GetUsersInDepartmentResponse response = weChatGateway.getUsersInDepartment(getInMemoryToken(), departmentID);
+        GetUsersInDepartmentResponse response = weChatGateway.getUsersInDepartment(departmentID, getInMemoryToken());
         log.info("Get Users in department returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
         return response.getUserList();
     }
 
     public List<String> getExternalContacts(String externalUserID) {
-        GetExternalContactResponse response = weChatGateway.getExternalContacts(getInMemoryToken(), externalUserID);
+        GetExternalContactResponse response = weChatGateway.getExternalContacts(externalUserID, getInMemoryToken());
         log.info("Get external contacts returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
         return response.getExternalUserIds();
+    }
+
+    @ManagedOperation
+    public String acquireToken() {
+        GetAuthTokenResponse response = weChatGateway.getToken(corpID, corpSecret);
+        log.info("Get token returned with errcode {} and errmsg {}", response.getErrorCode(), response.getErrorMessage());
+        inMemoryToken = response.getAccessToken();
+        return inMemoryToken;
+    }
+
+    @ManagedOperation
+    public String getCachedToken() {
+        return this.inMemoryToken;
+    }
+
+    @ManagedOperation
+    public void setCachedToken(String token) {
+        this.inMemoryToken = token;
     }
 
     private String getInMemoryToken() {
         if (StringUtils.isNotBlank(inMemoryToken)) {
             return inMemoryToken;
         } else {
-            return getToken();
+            return acquireToken();
         }
     }
 }

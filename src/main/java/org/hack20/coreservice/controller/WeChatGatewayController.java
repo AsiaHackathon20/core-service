@@ -5,7 +5,6 @@ import org.hack20.coreservice.gateway.model.wechat.Department;
 import org.hack20.coreservice.gateway.model.wechat.User;
 import org.hack20.coreservice.service.WeChatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +17,6 @@ public class WeChatGatewayController {
 
     @Autowired
     private WeChatService wechatService;
-
-    @GetMapping(value = "/token")
-    public String accessToken() {
-        log.info("Retrieving access token");
-        return wechatService.getToken();
-    }
 
     @PutMapping(value = "/department/all")
     public List<Department> getAllDepartments() {
