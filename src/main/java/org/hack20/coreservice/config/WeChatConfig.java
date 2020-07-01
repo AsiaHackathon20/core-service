@@ -23,8 +23,13 @@ public class WeChatConfig {
     }
 
     @Bean
+    public ConcurrentHashMap<String, ConcurrentHashMap<String, SMPActivity>> weChatWorkDepartmentDataStore(){
+        return new ConcurrentHashMap();
+    }
+
+    @Bean
     public WeChatWorkMessageService smpMessageService(){
-        return new WeChatWorkMessageService(weChatWorkDataStore(), policyService);
+        return new WeChatWorkMessageService(weChatWorkDepartmentDataStore(), policyService);
     }
 
 }

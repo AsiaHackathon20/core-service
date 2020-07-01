@@ -5,13 +5,11 @@ import org.hack20.coreservice.model.SMPActivity;
 import org.hack20.coreservice.model.WeChatMessage;
 import org.hack20.coreservice.service.WeChatWorkMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -32,8 +30,10 @@ public class WeChatMessagesController {
     }
 
     @GetMapping(value = "/getWeChatActivitySnapshot/")
-    public ConcurrentHashMap<String, SMPActivity> processWeChatMessage() {
-        return weChatWorkMessageService.getWeChatMessageContactMappings();
+    public ConcurrentHashMap<String, ConcurrentHashMap<String, SMPActivity>> getWeChatActivitySnapshot() {
+        final ConcurrentHashMap<String, ConcurrentHashMap<String, SMPActivity>> weChatMessageContactMappings = weChatWorkMessageService.getWeChatMessageContactMappings();
+        log.info("****** Sending WeChatMessage Activity Snapshot, size = {} ******", weChatMessageContactMappings.size());
+        return weChatMessageContactMappings;
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,5 +52,11 @@ public class PolicyService {
         });
         log.info("List of Eligible Contacts for sid = {}, platform = {} is {}", sid, platformIdentifierType, eligibleContacts);
         return eligibleContacts;
+    }
+
+    public void setPolicyMap(final List<Policy> policies) {
+        if (!CollectionUtils.isEmpty(policies)) {
+            policyMap.putAll(policies.stream().collect(Collectors.toMap(Policy::getSid, p -> p)));
+        }
     }
 }

@@ -1,0 +1,96 @@
+[
+  {
+    "sid": "F241770",
+    "productScope": ["US Govt"],
+    "socialMediaPlatforms": ["WE_CHAT", "SYMPHONY"],
+    "jpmEnterpriseAccount": "F241770",
+    "contacts": [{
+      "name": "Hari",
+      "clientIdentifier": "A123456",
+      "clientIdentifierType": "SPN",
+      "platforms": [
+        {
+          "identifier": "WE_CHAT",
+          "productScope": ["US Govt"],
+          "enterpriseAccount": ["E1", "E2", "E3"],
+          "personalAccount": ["HARI_PERSONAL_UNION_ID"]
+        },
+        {
+          "identifier": "WE_CHAT",
+          "productScope": ["EU Govt"],
+          "enterpriseAccount": ["E4", "E5", "E6"],
+          "personalAccount": ["HARI_PERSONAL_UNION_ID"]
+        }
+      ]
+    }]
+  },
+  {
+    "sid": "R316615",
+    "productScope": ["US Govt"],
+    "socialMediaPlatforms": ["WE_CHAT", "SYMPHONY"],
+    "jpmEnterpriseAccount": "R316615",
+    "contacts": [{
+      "name": "Anupam",
+      "clientIdentifier": "F241770",
+      "clientIdentifierType": "SID",
+      "platforms": [
+        {
+          "identifier": "WE_CHAT",
+          "productScope": ["US Govt"],
+          "enterpriseAccount": ["F241770"],
+          "personalAccount": ["ANUPAM_PERSONAL_UNION_ID"]
+        },
+        {
+          "identifier": "WE_CHAT",
+          "productScope": ["EU Govt"],
+          "enterpriseAccount": ["F241770"],
+          "personalAccount": ["ANUPAM_PERSONAL_UNION_ID"]
+        }
+      ]
+    }]
+  },
+  {
+    "sid": "N654179",
+    "productScope": ["US Govt"],
+    "socialMediaPlatforms": ["WE_CHAT", "SYMPHONY"],
+    "jpmEnterpriseAccount": "N654179",
+    "contacts": [{
+      "name": "Yichen_External_Account",
+      "clientIdentifier": "0123456",
+      "clientIdentifierType": "SPN",
+      "platforms": [
+        {
+          "identifier": "WE_CHAT",
+          "productScope": ["US Govt"],
+          "enterpriseAccount": ["N654179"],
+          "personalAccount": ["wm5iBDBgAAPOb8JLN8qFbyS3IOE8zKuA"]
+        },
+        {
+          "identifier": "WE_CHAT",
+          "productScope": ["EU Govt"],
+          "enterpriseAccount": ["N654179"],
+          "personalAccount": ["wm5iBDBgAAPOb8JLN8qFbyS3IOE8zKuA"]
+        }
+      ]
+    },
+      {
+        "name": "Anupam_External_Account",
+        "clientIdentifier": "9999999",
+        "clientIdentifierType": "SPN",
+        "platforms": [
+          {
+            "identifier": "WE_CHAT",
+            "productScope": ["US Govt"],
+            "enterpriseAccount": ["F241770"],
+            "personalAccount": ["wm5iBDBgAAGGB4tU88_fEDR6jCuIQEnQ"]
+          },
+          {
+            "identifier": "WE_CHAT",
+            "productScope": ["EU Govt"],
+            "enterpriseAccount": ["F241770"],
+            "personalAccount": ["wm5iBDBgAAGGB4tU88_fEDR6jCuIQEnQ"]
+          }
+        ]
+      }]
+  }
+]
