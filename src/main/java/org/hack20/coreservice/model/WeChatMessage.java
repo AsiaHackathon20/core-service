@@ -31,6 +31,8 @@ public class WeChatMessage implements ISMPMessage{
     @JsonProperty("ExternalUserID")
     private String externalUserId;
 
+    private String departmentId;
+
     @Override
     public String toString() {
         return "WeChatMessage{" +
@@ -46,6 +48,7 @@ public class WeChatMessage implements ISMPMessage{
                 ", welcomeCode='" + welcomeCode + '\'' +
                 ", event='" + event + '\'' +
                 ", externalUserId='" + externalUserId + '\'' +
+                ", departmentId='" + departmentId + '\'' +
                 '}';
     }
 }
